@@ -1,6 +1,6 @@
 #pragma once
 
-#define MAX PKT 1024 /* determines packet size in bytes */
+#define MAX_PKT 1024 /* determines packet size in bytes */
 
 typedef enum {false, true} boolean; /* boolean type */
 
@@ -9,7 +9,7 @@ typedef enum {false, true} boolean; /* boolean type */
  * These sequence numbers run from 0 up to and including MAX SEQ,
  * which is defined in each protocol needing it.
  */
-typedef unsigned int seq nr;
+typedef unsigned int seq_nr;
 
 /* packet definition
  * A packet is the unit of information exchanged between the network layer
@@ -17,25 +17,25 @@ typedef unsigned int seq nr;
  * In our model it always contains MAX_PKT bytes,
  * but more realistically it would be of variable length.
  */
-typedef struct {unsigned char data[MAX PKT];} packet;
+typedef struct {unsigned char data[MAX_PKT];} packet;
 
-typedef enum {data, ack, nak} frame kind; /* frame kind definition */
+typedef enum {data, ack, nak} frame_kind; /* frame kind definition */
 
 /* A more realistic implementation would use a variable-length info field, 
  * omitting it altogether for control frames.
  */
 typedef struct { /* frames are transported in this layer */
-frame kind kind; /* what kind of frame is it? data or control only*/
-seq nr seq; /* sequence number */
-seq nr ack; /* acknowledgement number */
-packet info; /* a single network layer packet */
+  frame_kind kind; /* what kind of frame is it? data or control only*/
+  seq_nr seq; /* sequence number */
+  seq_nr ack; /* acknowledgement number */
+  packet info; /* a single network layer packet */
 } frame;
 
 /* Wait for an event to happen.
  * return its type in event. 
  * sits in a tight loop waiting for something to happen.
  */
-void wait_for_event(event type *event);
+void wait_for_event(event_type *event);
 
 /* Fetch a packet from the network layer for transmission on the channel. */
 void from_network_layer(packet *p);

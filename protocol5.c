@@ -7,7 +7,7 @@ typedef enum {frame_arrival, cksum_err, timeout, network_layer_ready} event_type
 #include "protocol.h"
 
 /* Return true if a <= b < c circularly; false otherwise. */
-static boolean between(seq nr a, seq nr b, seq nr c) {
+static boolean between(seq_nr a, seq_nr b, seq_nr c) {
   if (((a <= b) && (b < c)) || ((c < a) && (a <= b)) || ((b < c) && (c < a)))
     return(true);
   else
